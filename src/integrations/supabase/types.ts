@@ -14,7 +14,209 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      carbon_credits: {
+        Row: {
+          amount: number
+          created_at: string
+          id: string
+          owner_id: string
+          project_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          id?: string
+          owner_id: string
+          project_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: string
+          owner_id?: string
+          project_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "carbon_credits_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "carbon_credits_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      marketplace_listings: {
+        Row: {
+          amount: number
+          created_at: string
+          credit_id: string
+          id: string
+          price_per_credit: number
+          seller_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          credit_id: string
+          id?: string
+          price_per_credit: number
+          seller_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          credit_id?: string
+          id?: string
+          price_per_credit?: number
+          seller_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "marketplace_listings_credit_id_fkey"
+            columns: ["credit_id"]
+            isOneToOne: false
+            referencedRelation: "carbon_credits"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "marketplace_listings_seller_id_fkey"
+            columns: ["seller_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          crx_balance: number
+          id: string
+          updated_at: string
+          username: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          crx_balance?: number
+          id: string
+          updated_at?: string
+          username?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          crx_balance?: number
+          id?: string
+          updated_at?: string
+          username?: string
+        }
+        Relationships: []
+      }
+      projects: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          name: string
+          updated_at: string
+          user_id: string
+          verification_doc_url: string | null
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          id?: string
+          name: string
+          updated_at?: string
+          user_id: string
+          verification_doc_url?: string | null
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          name?: string
+          updated_at?: string
+          user_id?: string
+          verification_doc_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "projects_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      transactions: {
+        Row: {
+          action: string
+          amount: number
+          created_at: string
+          credit_id: string | null
+          id: string
+          tx_hash: string
+          user_id: string
+        }
+        Insert: {
+          action: string
+          amount: number
+          created_at?: string
+          credit_id?: string | null
+          id?: string
+          tx_hash: string
+          user_id: string
+        }
+        Update: {
+          action?: string
+          amount?: number
+          created_at?: string
+          credit_id?: string | null
+          id?: string
+          tx_hash?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transactions_credit_id_fkey"
+            columns: ["credit_id"]
+            isOneToOne: false
+            referencedRelation: "carbon_credits"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
